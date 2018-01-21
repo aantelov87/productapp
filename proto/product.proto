@@ -1,0 +1,34 @@
+syntax = "proto2";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+package proto;
+
+message Product {
+	optional string id = 1;
+	optional string name = 2;
+	optional string description = 3;
+	repeated string attributes = 4;
+	repeated string images = 5;
+	optional google.protobuf.Timestamp create_time = 6;
+}
+
+message ListProductsResponse {
+	repeated Product products = 1;
+}
+
+message GetProductRequest {
+	required string id = 1;
+}
+
+message CreateProductRequest {
+	required Product product = 1;
+}
+
+service ProductApi {
+	rpc GetProduct(GetProductRequest) returns (Product) {}
+
+	rpc CreateProduct(CreateProductRequest) returns (Product) {}
+
+	rpc ListProducts(google.protobuf.Empty) returns (ListProductsResponse){}
+}
